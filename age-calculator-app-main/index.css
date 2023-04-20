@@ -1,0 +1,81 @@
+body {
+    height: 100vh;
+    font-family: Poppins, serif;
+    background-color: lightgray;
+}
+
+.container {
+    margin: 5% auto;
+    width: 355px;
+    border-radius: 20px 20px 100px 20px;
+    background-color: white;
+}
+
+.cont-2 {
+    margin: 15px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.font-style {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: gray;
+}
+
+input {
+    width: 85px;
+    height: 45px;
+    font-weight: bold;
+    padding: 15px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.border-div {
+    margin: 34px auto;
+    height: 2px;
+    background-color: lightgrey;
+    z-index: 0;
+}
+
+.image-div {
+    margin: 0 auto;
+    width: 70px;
+    height: 70px;
+    background-color: hsl(259, 100%, 65%);
+    z-index: 2;
+}
+
+button {
+    display: flex;
+    margin: auto;
+    background-color: hsl(259, 100%, 65%);
+    border: none;
+}
+
+img {
+    margin: auto;
+    width: 30px;
+    height: 30px;
+
+}
+
+.result {
+    font-size: 3rem;
+    font-weight: 900;
+}
+
+.purple {
+    color: hsl(259, 100%, 65%);
+}
+
+.attribution {
+    margin-top: 10px;
+    font-size: 0.7rem;
+}
