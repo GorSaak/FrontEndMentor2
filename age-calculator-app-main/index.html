@@ -22,16 +22,16 @@
 <body>
 <div class="container justify-content-start w-md-100">
     <div class="cont-2">
-        <div class="row font-style mt-4">
-            <div class="col-4">DAY</div>
-            <div class="col-4">MONTH</div>
-            <div class="col-4">YEAR</div>
+        <div class="row top-font-style mt-4">
+            <div class="col-4 col-md-3">DAY</div>
+            <div class="col-4 col-md-3">MONTH</div>
+            <div class="col-4 col-md-3">YEAR</div>
         </div>
         <div class="row pt-1">
-            <div class="col-4 item">
+            <div class="col-4 col-md-3 item">
                 <input id="day-input" class="border rounded" type="number" placeholder="DD">
             </div>
-            <div class="col-4 item">
+            <div class="col-4 col-md-3 item">
                 <input id="month-input" class="border rounded" type="number" placeholder="MM"
                        pattern="^([1-9]|1[012])$">
             </div>
@@ -39,11 +39,19 @@
                 <input id="year-input" class="border rounded" type="number" placeholder="YYYY">
             </div>
         </div>
+        <div class="row error-font-style">
+            <div class="col-4 col-md-3 text-center">DAY</div>
+            <div class="col-4 col-md-3 text-center">MONTH</div>
+            <div class="col-4 col-md-3 text-center">YEAR</div>
+        </div>
         <div class="btn-div position-relative">
             <div class="border-div w-100 position-absolute"></div>
-            <div class="image-div position-relative rounded-circle d-flex mt-5 mb-5">
-                <button type="button" onclick="getTheAge()"><img
-                        src="../age-calculator-app-main/assets/images/icon-arrow.svg" alt="arrow"></button>
+            <div id="for-hover-id">
+                <div class="image-div position-relative rounded-circle d-flex mt-5 mb-5">
+                    <button type="button" onclick="getTheAge()">
+                        <img src="../age-calculator-app-main/assets/images/icon-arrow.svg" alt="arrow">
+                    </button>
+                </div>
             </div>
         </div>
         <div class="result d-flex">

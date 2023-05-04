@@ -7,7 +7,6 @@ const a = document.getElementById("day-input")
 a.addEventListener("input", () => {
     if ((Number.isInteger(+a.value) && 1 <= a.value && a.value <= 31) || a.value == '') {
     } else {
-        alert("you can input only from 1 to 31");
         document.getElementById("day-input").value = ''
     }
 })

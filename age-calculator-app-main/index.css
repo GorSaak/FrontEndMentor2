@@ -17,7 +17,7 @@ body {
     padding-bottom: 10px;
 }
 
-.font-style {
+.top-font-style {
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 2px;
@@ -29,6 +29,7 @@ input {
     height: 45px;
     font-weight: bold;
     padding: 15px;
+    font-size: 1.2rem;
 }
 
 input::-webkit-outer-spin-button,
@@ -36,6 +37,14 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+.error-font-style {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: red;
+}
+
 
 .border-div {
     margin: 34px auto;
@@ -57,14 +66,21 @@ button {
     margin: auto;
     background-color: hsl(259, 100%, 65%);
     border: none;
+    outline: none;
 }
 
 img {
     margin: auto;
     width: 30px;
     height: 30px;
-
+    border: none;
 }
+
+#for-hover-id:hover * {
+    background-color: black;
+}
+
+
 
 .result {
     font-size: 3rem;
@@ -74,9 +90,22 @@ img {
 .purple {
     color: hsl(259, 100%, 65%);
     margin-right: 20px;
+    letter-spacing: 5px;
 }
 
 .attribution {
     margin-top: 10px;
     font-size: 0.7rem;
+}
+
+@media screen and (min-width: 768px) {
+
+    .container {
+        width: 500px;
+    }
+
+    .image-div {
+        margin: 20px 0 0 auto !important;
+    }
+
 }
