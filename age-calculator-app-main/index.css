@@ -25,11 +25,15 @@ body {
 }
 
 input {
-    width: 85px;
+    width: 100px;
     height: 45px;
     font-weight: bold;
     padding: 15px;
     font-size: 1.2rem;
+}
+
+input:focus{
+    outline: none;
 }
 
 input::-webkit-outer-spin-button,
@@ -39,9 +43,8 @@ input::-webkit-inner-spin-button {
 }
 
 .error-font-style {
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 2px;
+    font-size: 0.5rem;
+    font-weight: 900;
     color: red;
 }
 

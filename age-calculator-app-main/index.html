@@ -23,26 +23,26 @@
 <div class="container justify-content-start w-md-100">
     <div class="cont-2">
         <div class="row top-font-style mt-4">
-            <div class="col-4 col-md-3">DAY</div>
-            <div class="col-4 col-md-3">MONTH</div>
-            <div class="col-4 col-md-3">YEAR</div>
+            <div id="day-top-text"  class="day-top-text col-4 col-md-3">DAY</div>
+            <div id="month-top-text" class="col-4 col-md-3">MONTH</div>
+            <div id="year-top-text" class="col-4 col-md-3">YEAR</div>
         </div>
         <div class="row pt-1">
             <div class="col-4 col-md-3 item">
-                <input id="day-input" class="border rounded" type="number" placeholder="DD">
+                <input id="day-input" class="rounded" type="number" placeholder="DD">
             </div>
             <div class="col-4 col-md-3 item">
-                <input id="month-input" class="border rounded" type="number" placeholder="MM"
+                <input id="month-input" class="rounded" type="number" placeholder="MM"
                        pattern="^([1-9]|1[012])$">
             </div>
             <div class="col-4 item">
-                <input id="year-input" class="border rounded" type="number" placeholder="YYYY">
+                <input id="year-input" class="rounded" type="number" placeholder="YYYY">
             </div>
         </div>
-        <div class="row error-font-style">
-            <div class="col-4 col-md-3 text-center">DAY</div>
-            <div class="col-4 col-md-3 text-center">MONTH</div>
-            <div class="col-4 col-md-3 text-center">YEAR</div>
+        <div class="row error-font-style mt-1">
+            <div id="day-bottom-text" class="col-4 col-md-3 text-center"></div>
+            <div id="month-bottom-text" class="col-4 col-md-3 text-center"></div>
+            <div id="year-bottom-text" class="col-4 col-md-3 text-center"></div>
         </div>
         <div class="btn-div position-relative">
             <div class="border-div w-100 position-absolute"></div>
