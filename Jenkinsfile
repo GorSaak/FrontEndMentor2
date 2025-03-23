@@ -1,7 +1,10 @@
 pipeline {
-    agent any
-
-
+    agent {
+            docker {
+                image 'node:18-alpine'  // Используйте любой образ
+                args '-v /var/run/docker.sock:/var/run/docker.sock'
+            }
+        }
     stages {
         stage('Build Docker Image') {
             steps {
