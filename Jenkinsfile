@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t age-calc:2.0.0 .'
+                sh 'docker build -t age-calc:2.1.0 .'
             }
         }
 

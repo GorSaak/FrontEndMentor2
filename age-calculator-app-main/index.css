@@ -45,7 +45,7 @@ input::-webkit-inner-spin-button {
 .error-font-style {
     font-size: 0.5rem;
     font-weight: 900;
-    color: green;
+    color: red;
 }
 
 
