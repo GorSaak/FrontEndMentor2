@@ -1,29 +1,27 @@
 pipeline {
-
     agent any
 
-	tools {
+    environment {
 
-	}
-	enviroment {
+    }
 
-	}
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t age-calc:2.0.0 .'
+            }
+        }
 
-	stages {
-		stage(“build docker image”) {
-			steps {
-			    sh ‘docker build -t age-calc:2.0.0’
-			}
+        stage('Push to Docker Hub') {
+            steps {
+                echo 'Pushing image to Docker Hub'
+            }
+        }
 
-		stages {
-		stage(“image to docker-hub”) {
-			steps {
-                echo 'image to dicker'
-			}
-		stage(“deploy in ec2”) {
-			steps {
-				echo “All is done”
-			}
-		}
-	}
+        stage('Deploy to EC2') {
+            steps {
+                echo 'Deploying to EC2'
+            }
+        }
+    }
 }
