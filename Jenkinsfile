@@ -4,10 +4,10 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                def matcher = readFile('README.md') =~ '<version>(.+)</version>'
-                def version = matcher[0][1]
-                env.IMAGE_NAME = "$version-$BUILDNUMBER"
-                echo IMAGE_NAME
+                //def matcher = readFile('README.md') =~ '<version>(.+)</version>'
+                //def version = matcher[0][1]
+                //env.IMAGE_NAME = "$version-$BUILDNUMBER"
+                //echo IMAGE_NAME
                 sh 'docker build -t gorsaakyan/age-calc:3.0.0 .'
             }
         }
