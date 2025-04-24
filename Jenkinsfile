@@ -4,10 +4,15 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                script {
-                 def env.VERSION = (readFile('README.md') =~ /<version>(.+)<\/version>/)[0][1]
-                            sh "docker build -t gorsaakyan/age-calc:${env.VERSION} ."
-                 }
+                script {  // <--- Add this wrapper
+                            def content = readFile('README.md')
+                            def matcher = (content =~ /<version>(.+)<\/version>/)
+                            if (matcher) {
+                                env.VERSION = matcher[0][1]
+                                sh "docker build -t gorsaakyan/age-calc:${env.VERSION} ."
+                            } else {
+                                error "Version tag missing in README.md"
+                            }
             }
         }
 
