@@ -13,6 +13,7 @@ pipeline {
                             } else {
                                 error "Version tag missing in README.md"
                             }
+                }
             }
         }
 
