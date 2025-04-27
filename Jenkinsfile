@@ -5,9 +5,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                  script {
-                     def version = (readFile('README.md') =~ /<version>(\d+\.\d+\.\d+)<\/version>/)[0][1]
-                     echo version
-                     sh "docker build -t gorsaakyan/age-calc:${version} ."
+                     def env.VERSION = (readFile('README.md') =~ /<version>(\d+\.\d+\.\d+)<\/version>/)[0][1]
+                     sh "docker build -t gorsaakyan/age-calc:${env.VERSION} ."
                  }
             }
         }
@@ -28,9 +27,14 @@ pipeline {
             steps {
                 echo 'Deploying to EC2'
                 sshagent(['EC2-SSH-credentials']) {
-                   sh 'ssh -o StrictHostKeyChecking=no ec2-user@51.20.107.245'
-                   sh "ssh docker pull gorsaakyan/age-calc:${env.VERSION}"
-                   sh "docker run -d --name age-calc:${env.VERSION} -p 3000:3000 gorsaakyan/age-calc:${env.VERSION}"
+                    sh """
+                        ssh -T -o StrictHostKeyChecking=no ec2-user@51.20.107.245 '
+                            docker stop age-calc-${env.VERSION} || true
+                            docker rm age-calc-${env.VERSION} || true
+                            docker pull gorsaakyan/age-calc:${env.VERSION}
+                            docker run -d --name age-calc-${env.VERSION} -p 3000:3000 gorsaakyan/age-calc:${env.VERSION}
+                        '
+                    """
                 }
             }
         }
