@@ -31,11 +31,10 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 echo 'Deploying to EC2'
-                sshagent(['EC2-SSH-credentials']) {
+
                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@51.20.107.245'
                    sh "ssh docker pull gorsaakyan/age-calc:${env.VERSION}"
                    sh "docker run -d --name age-calc:${env.VERSION} -p 3000:3000 gorsaakyan/age-calc:${env.VERSION}"
-                }
             }
         }
     }
