@@ -5,22 +5,11 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                  script {
-                   def content = readFile('README.md')
-                   echo ">>> README content preview:\n${content.take(200).replaceAll(/\n/, '\\n')}"
+                     String version = readFile('README.md') =~ /<version>(\d+\.\d+\.\d+)<\/version>/
+                         ?.find { it[1] }
+                         ?: error("❌ Version not found in README.md")
 
-                   def matcher = (content =~ /<version>\s*([\d\.]+)\s*<\/version>/)
-
-                   if (!matcher.find()) {
-                     error "❌"
-                   }
-
-                   def version = matcher.group(1).trim()
-                   echo "✅ Parsed version = [${version}]"
-
-                   env.VERSION = version
-                   echo ">>> env.VERSION = [${env.VERSION}]"
-
-                    sh "docker build -t gorsaakyan/age-calc:${env.VERSION} ."
+                     sh "docker build -t gorsaakyan/age-calc:${version} ."
                  }
             }
         }
