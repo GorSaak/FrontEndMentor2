@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     def content = readFile('README.md')
-                    def version = content.find(/<version>([\d.]+)<\/version>/) { fullMatch, v -> v }
+                    def version = content.find(/<version>([\d.]+)<\/version>/) { full, v -> v.trim() }
                     echo ">>> local variable version = ${version}"
                     if (!version) {
                         error "❌ Version tag missing in README.md"
