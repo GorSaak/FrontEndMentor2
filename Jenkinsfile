@@ -5,7 +5,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                  script {
-                     def env.VERSION = (readFile('README.md') =~ /<version>(\d+\.\d+\.\d+)<\/version>/)[0][1]
+                     def version = (readFile('README.md') =~ /<version>(\d+\.\d+\.\d+)<\/version>/)[0][1]
+                     env.VERSION = version
                      sh "docker build -t gorsaakyan/age-calc:${env.VERSION} ."
                  }
             }
