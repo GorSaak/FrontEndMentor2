@@ -5,20 +5,12 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // 1) Read the file once
                     def content = readFile('README.md')
-
-                    // 2) Extract the version string in one go (no Matcher saved in env or fields)
                     def version = content.find(/<version>(.+?)<\/version>/) { full, v -> v?.trim() }
-
                     if (!version) {
                         error "❌ Version tag missing in README.md"
                     }
-
-                    // 3) Expose to the env if you really need to downstream
                     env.VERSION = version
-
-                    // 4) Build your image
                     sh "docker build -t gorsaakyan/age-calc:${env.VERSION} ."
                 }
             }
@@ -27,7 +19,7 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 echo 'Pushing image to Docker Hub'
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: "PASS", usernameVariable: "USER")]) {
+                withCredentials([usernamePassword(credentialsId: 'Docker-hub-credentials', passwordVariable: "PASS", usernameVariable: "USER")]) {
                     sh 'echo $PASS | docker login -u $USER --password-stdin'
                     sh 'docker push gorsaakyan/age-calc:${env.VERSION}'
                 }
