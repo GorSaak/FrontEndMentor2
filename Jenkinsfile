@@ -7,10 +7,13 @@ pipeline {
                 script {
                     def content = readFile('README.md')
                     def version = content.find(/<version>(.+?)<\/version>/) { full, v -> v?.trim() }
+                    echo ">>> local variable version = ${version}"
                     if (!version) {
                         error "❌ Version tag missing in README.md"
                     }
+                    echo ">>> local variable version = ${version}"
                     env.VERSION = version
+                    echo ">>> env.VERSION = ${env.VERSION}"
                     sh "docker build -t gorsaakyan/age-calc:${env.VERSION} ."
                 }
             }
