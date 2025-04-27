@@ -4,15 +4,22 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                script {  // <--- Add this wrapper
-                            def content = readFile('README.md')
-                            def matcher = (content =~ /<version>(.+)<\/version>/)
-                            if (matcher) {
-                                env.VERSION = matcher[0][1]
-                                sh "docker build -t gorsaakyan/age-calc:${env.VERSION} ."
-                            } else {
-                                error "Version tag missing in README.md"
-                            }
+                script {
+                    // 1) Read the file once
+                    def content = readFile('README.md')
+
+                    // 2) Extract the version string in one go (no Matcher saved in env or fields)
+                    def version = content.find(/<version>(.+?)<\/version>/) { full, v -> v?.trim() }
+
+                    if (!version) {
+                        error "❌ Version tag missing in README.md"
+                    }
+
+                    // 3) Expose to the env if you really need to downstream
+                    env.VERSION = version
+
+                    // 4) Build your image
+                    sh "docker build -t gorsaakyan/age-calc:${env.VERSION} ."
                 }
             }
         }
