@@ -6,16 +6,15 @@ pipeline {
             steps {
                 script {
                     def content = readFile('README.md')
-                    def matcher = (content =~ /<version>([\d.]+)<\/version>/)
-                    if (!matcher.find()) {
-                        error "❌Version tag not found in README.md; expected <version>x.y.z</version>"
+                    def version = content.find(/<version>([\d.]+)<\/version>/) { fullMatch, v -> v }
+                    echo ">>> local variable version = ${version}"
+                    if (!version) {
+                        error "❌ Version tag missing in README.md"
                     }
-                    def version = matcher.group(1).trim()
-                    echo "Parsed version = ${version}"
+                    echo ">>> local variable version = ${version}"
                     env.VERSION = version
                     echo ">>> env.VERSION = ${env.VERSION}"
-
-                    sh "docker build -t gorsaakyan/age-calc:${env.VERSION} ."
+                    sh "docker build -t gorsaakyan/age-calc:${env.VERSION}"
                 }
             }
         }
