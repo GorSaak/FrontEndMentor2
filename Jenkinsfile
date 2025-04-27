@@ -5,10 +5,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                  script {
-                     String version = readFile('README.md') =~ /<version>(\d+\.\d+\.\d+)<\/version>/
-                         ?.find { it[1] }
-                         ?: error("❌ Version not found in README.md")
-
+                     def version = (readFile('README.md') =~ /<version>(\d+\.\d+\.\d+)<\/version>/)[0][1]
                      sh "docker build -t gorsaakyan/age-calc:${version} ."
                  }
             }
