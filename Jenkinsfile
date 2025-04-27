@@ -20,8 +20,10 @@ pipeline {
             steps {
                 echo 'Pushing image to Docker Hub'
                 withCredentials([usernamePassword(credentialsId: 'Docker-hub-credentials', passwordVariable: "PASS", usernameVariable: "USER")]) {
-                    sh 'echo $PASS | docker login -u $USER --password-stdin'
-                    sh 'docker push gorsaakyan/age-calc:${env.VERSION}'
+                    sh """#!/bin/bash
+                    echo \$PASS | docker login -u \$USER --password-stdin
+                    docker push gorsaakyan/age-calc:${env.VERSION}
+                    """
                 }
             }
         }
