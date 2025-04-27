@@ -6,6 +6,7 @@ pipeline {
             steps {
                  script {
                      def version = (readFile('README.md') =~ /<version>(\d+\.\d+\.\d+)<\/version>/)[0][1]
+                     echo version
                      sh "docker build -t gorsaakyan/age-calc:${version} ."
                  }
             }
