@@ -33,7 +33,7 @@ pipeline {
                             echo \$PASS | docker login -u \$USER --password-stdin
                             docker pull gorsaakyan/age-calc:${env.VERSION}
                         """
-
+                    }
                     def dockerCmd = """
                         docker stop age-calc || true
                         docker rm age-calc || true
