@@ -30,7 +30,6 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-PAT-credentials', passwordVariable: "PASS", usernameVariable: "USER")]) {
                             sh """
-                                ssh -o StrictHostKeyChecking=no ec2-user@16.171.241.39
                                     echo \$PASS | docker login -u \$USER --password-stdin
                                     docker pull gorsaakyan/age-calc:${env.VERSION}
                                     docker stop age-calc || true
