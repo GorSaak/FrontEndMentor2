@@ -29,22 +29,18 @@ pipeline {
                 echo 'Deploying to EC2'
                 script {
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-PAT-credentials', passwordVariable: "PASS", usernameVariable: "USER")]) {
-                        sh """#!/bin/bash
-                            echo \$PASS | docker login -u \$USER --password-stdin
-                            docker pull gorsaakyan/age-calc:${env.VERSION}
-                        """
+                        sshagent(['ec2-ssh-credentials']) {
+                            sh """
+                                ssh -o StrictHostKeyChecking=no ec2-user@16.171.241.39 '
+                                    echo \$PASS | docker login -u \$USER --password-stdin
+                                    docker pull gorsaakyan/age-calc:${env.VERSION}
+                                    docker stop age-calc || true
+                                    docker rm age-calc || true
+                                    docker run -d --name age-calc -p 3001:3001 gorsaakyan/age-calc:${env.VERSION}
+                                '
+                            """
+                        }
                     }
-                    def dockerCmd = """
-                        docker stop age-calc || true
-                        docker rm age-calc || true
-                        docker run -d --name age-calc -p 3001:3001 gorsaakyan/age-calc:${env.VERSION}
-                    """
-
-                    sshagent(['ec2-ssh-credentials']) {
-                        sh 'ssh-add -L'
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@16.171.241.39 ${dockerCmd}"
-                    }
-
                 }
             }
         }
