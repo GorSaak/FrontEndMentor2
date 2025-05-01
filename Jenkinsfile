@@ -27,16 +27,6 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 echo 'Deploying to EC2'
-                sshagent(['EC2-SSH-credentials']) {
-                    sh """
-                        ssh -T -o StrictHostKeyChecking=no ec2-user@51.20.107.245 '
-                            docker stop age-calc-${env.VERSION} || true
-                            docker rm age-calc-${env.VERSION} || true
-                            docker pull gorsaakyan/age-calc:${env.VERSION}
-                            docker run -d --name age-calc-${env.VERSION} -p 3000:3000 gorsaakyan/age-calc:${env.VERSION}
-                        '
-                    """
-                }
                 def dockerCmd = "docker run -d -p 3001:3001 gorsaakyan/age-calc:${env.VERSION}"
                 sshagent(['ec2-ssh-credentials']) {
                     sh "ssh -T -o StrictHostKeyChecking=no ec2-user@16.171.241.39 $dockerCmd"
