@@ -15,7 +15,7 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 echo 'Pushing image to Docker Hub'
-                withCredentials([usernamePassword(credentialsId: 'Docker-hub-credentials', passwordVariable: "PASS", usernameVariable: "USER")]) {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-PAT-credentials', passwordVariable: "PASS", usernameVariable: "USER")]) {
                     sh """#!/bin/bash
                     echo \$PASS | docker login -u \$USER --password-stdin
                     docker push gorsaakyan/age-calc:${env.VERSION}
@@ -36,6 +36,10 @@ pipeline {
                             docker run -d --name age-calc-${env.VERSION} -p 3000:3000 gorsaakyan/age-calc:${env.VERSION}
                         '
                     """
+                }
+                def dockerCmd = "docker run -d -p 3001:3001 gorsaakyan/age-calc:${env.VERSION}"
+                sshagent(['ec2-ssh-credentials']) {
+                    sh "ssh -T -o StrictHostKeyChecking=no ec2-user@16.171.241.39 $dockerCmd"
                 }
             }
         }
