@@ -41,6 +41,7 @@ pipeline {
                     """
 
                     sshagent(['ec2-ssh-credentials']) {
+                        sh 'ssh-add -L'
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@16.171.241.39 ${dockerCmd}"
                     }
 
