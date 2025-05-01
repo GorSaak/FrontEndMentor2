@@ -34,7 +34,7 @@ pipeline {
                                     docker pull gorsaakyan/age-calc:${env.VERSION}
                                     docker stop age-calc || true
                                     docker rm age-calc || true
-                                    docker run -d --name age-calc -p 3001:3001 gorsaakyan/age-calc:${env.VERSION}
+                                    docker run -p 3080:3080 -d --name age-calc gorsaakyan/age-calc:${env.VERSION}
                             """
                     }
                 }
