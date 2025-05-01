@@ -44,17 +44,6 @@ pipeline {
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@16.171.241.39 ${dockerCmd}"
                     }
 
-
-
-
-                    sh """#!/bin/bash
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-PAT-credentials', passwordVariable: "PASS", usernameVariable: "USER")]) {
-
-                                            echo \$PASS | docker login -u \$USER --password-stdin
-
-                                            """
-                    ssh -T -o StrictHostKeyChecking=no ec2-user@16.171.241.39 "
-                    }
                 }
             }
         }
