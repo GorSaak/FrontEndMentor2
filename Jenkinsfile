@@ -30,12 +30,30 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-PAT-credentials', passwordVariable: "PASS", usernameVariable: "USER")]) {
                         sh """#!/bin/bash
-                        echo \$PASS | docker login -u \$USER --password-stdin
+                            echo \$PASS | docker login -u \$USER --password-stdin
+                            docker pull gorsaakyan/age-calc:${env.VERSION}
                         """
-                    }
-                    def dockerCmd = "docker run -d -p 3001:3001 gorsaakyan/age-calc:${env.VERSION}"
+
+                    def dockerCmd = """
+                        docker stop age-calc || true
+                        docker rm age-calc || true
+                        docker run -d --name age-calc -p 3001:3001 gorsaakyan/age-calc:${env.VERSION}
+                    """
+
                     sshagent(['ec2-ssh-credentials']) {
-                    sh "ssh -T -o StrictHostKeyChecking=no ec2-user@16.171.241.39 $dockerCmd"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@16.171.241.39 ${dockerCmd}"
+                    }
+
+
+
+
+                    sh """#!/bin/bash
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-PAT-credentials', passwordVariable: "PASS", usernameVariable: "USER")]) {
+
+                                            echo \$PASS | docker login -u \$USER --password-stdin
+
+                                            """
+                    ssh -T -o StrictHostKeyChecking=no ec2-user@16.171.241.39 "
                     }
                 }
             }
