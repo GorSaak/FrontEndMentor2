@@ -27,10 +27,12 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 echo 'Deploying to EC2'
-                def dockerCmd = "docker run -d -p 3001:3001 gorsaakyan/age-calc:${env.VERSION}"
-                sshagent(['ec2-ssh-credentials']) {
-                    sh "ssh -T -o StrictHostKeyChecking=no ec2-user@16.171.241.39 $dockerCmd"
-                }
+                script {
+                    def dockerCmd = "docker run -d -p 3001:3001 gorsaakyan/age-calc:${env.VERSION}"
+                    sshagent(['ec2-ssh-credentials']) {
+                        sh "ssh -T -o StrictHostKeyChecking=no ec2-user@16.171.241.39 $dockerCmd"
+                    }
+    }
             }
         }
     }
